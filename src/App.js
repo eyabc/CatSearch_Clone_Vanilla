@@ -13,6 +13,10 @@ export default class App {
 
     this.searchInput = new SearchInput({
       $target,
+      onSearch: async keyword => {
+        const data = await api.fetchCats(keyword);
+        this.setState(data);
+      }
     });
     this.searchResult = new SearchResult({
       $target,
@@ -20,6 +24,11 @@ export default class App {
     this.imageInfo = new ImageInfo({
       $target,
     })
+  }
+
+  setState(nextData) {
+    this.data = nextData;
+
   }
 
 
