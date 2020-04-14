@@ -1,5 +1,5 @@
 export default class ImageInfo {
-  constructor ({$target, getCharacter}) {
+  constructor ({$target, getCharacter, isDark}) {
 
     this.visible = false;
     this.id = null;
@@ -11,7 +11,9 @@ export default class ImageInfo {
 
     this.close = () => {
       this.$imageInfo.remove();
-    }
+    };
+    this.isDark = isDark;
+
   }
 
   async setState ({id, visible}) {
@@ -54,9 +56,18 @@ export default class ImageInfo {
       this.$imageInfo.addEventListener('click', e => {
         this.close();
       });
-      this.$imageInfo.querySelector('.content-wrapper').onclick = e => {
+      const $content = this.$imageInfo.querySelector('.content-wrapper');
+      $content.onclick = e => {
         e.stopPropagation();
       };
+      if(this.isDark) {
+        $content.classList.remove('white');
+        $content.classList.add('dark');
+      } else {
+        $content.classList.remove('dark');
+        $content.classList.add('white');
+      }
+
       window.addEventListener('keyup', e => {
         if(e.keyCode === 27) this.close();
       })

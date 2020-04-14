@@ -10,22 +10,28 @@ export default class App {
 
   constructor ($target) {
     this.$target = $target;
+    const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches;
 
-    this.theme = new Theme({
-      $target,
-      toggleTheme: e => {
-        const bodyClass = document.body.classList;
-        if(e.target.checked) {
-          bodyClass.remove('white');
-          bodyClass.add('dark');
-        } else {
-          bodyClass.remove('dark');
-          bodyClass.add('white');
-        }
+    const applyTheme = (value) => {
+      const $bodyClass = document.body.classList;
+      if(value) {
+        $bodyClass.remove('white');
+        $bodyClass.add('dark');
+      } else {
+        $bodyClass.remove('dark');
+        $bodyClass.add('white');
       }
+    };
+    applyTheme(isDark);
+
+
+    new Theme({
+      $target,
+      isDark,
+      toggleTheme: (value) => applyTheme(value)
     });
 
-    this.searchInput = new SearchInput({
+    new SearchInput({
       $target,
       onSearch: async keyword => {
         const data = await api.fetchCats(keyword);
@@ -47,6 +53,7 @@ export default class App {
     });
     this.imageInfo = new ImageInfo({
       $target,
+      isDark,
       getCharacter: async id => api.fetchCharacter(id)
     })
   }
@@ -55,6 +62,4 @@ export default class App {
     this.data = nextData;
     this.searchResult.setState(nextData);
   }
-
-
 }
