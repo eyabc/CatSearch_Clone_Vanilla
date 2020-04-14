@@ -104,3 +104,12 @@ html {
 .item {
     cursor: pointer;
 }
+
+body.white {
+    background: #fff !important;
+    color: black;
+}
+body.dark {
+    background: #000 !important;
+    color: white;
+}

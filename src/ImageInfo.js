@@ -39,7 +39,7 @@ export default class ImageInfo {
             <img src="${ url }" alt="${ data.name }"/>
             <ul class="description">
               <li>성격: ${data.temperament}</li>
-              <li>origin : ${data.origin}</li> 0
+              <li>origin : ${data.origin}</li>
               <li>국적: ${data.country_code}</li>
             </ul> 
         </article>

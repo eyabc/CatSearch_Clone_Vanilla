@@ -11,6 +11,20 @@ export default class App {
   constructor ($target) {
     this.$target = $target;
 
+    this.theme = new Theme({
+      $target,
+      toggleTheme: e => {
+        const bodyClass = document.body.classList;
+        if(e.target.checked) {
+          bodyClass.remove('white');
+          bodyClass.add('dark');
+        } else {
+          bodyClass.remove('dark');
+          bodyClass.add('white');
+        }
+      }
+    });
+
     this.searchInput = new SearchInput({
       $target,
       onSearch: async keyword => {
