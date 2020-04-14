@@ -94,6 +94,11 @@ html {
     .SearchResult {
         grid-template-columns: repeat(2, minmax(280px, 1fr));
     }
+    .ImageInfo .content-wrapper {
+        left: 10px;
+        right: 10px;
+        transform: translate(0, -50%);
+    }
 }
 @media (max-width: 577px) {
     .SearchResult {
