@@ -1,5 +1,5 @@
 /* API_DOCS : https://docs.thecatapi.com/authentication */
-const API_ENDPOINT = 'https://api.thecatapi.com/v1/images/search?';
+const API_ENDPOINT = 'https://api.thecatapi.com/v1/images/search?limit=50&mime_types=jpg';
 
 const request = async url => {
   try {
@@ -13,11 +13,11 @@ const request = async url => {
 };
 
 export default {
-  fetchRandomImages: () => request(`${API_ENDPOINT}limit=50`),
+  fetchRandomImages: () => request(API_ENDPOINT),
   fetchCats: keyword => {
     const pattern = /고양이|cat/;
     if (pattern.test(keyword)) {
-      return request(`${API_ENDPOINT}limit=50`);
+      return request(API_ENDPOINT);
     }
     return [];
   }

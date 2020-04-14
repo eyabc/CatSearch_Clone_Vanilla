@@ -1,7 +1,7 @@
 const SEARCH_HISTORY = 'searchHistory';
 
 export default class SearchInput {
-  constructor({ $target, onSearch }) {
+  constructor({ $target, onSearch, onRandom }) {
     const $searchWrapper = document.createElement('div');
     $searchWrapper.className = 'SearchWrap';
 
@@ -29,22 +29,31 @@ export default class SearchInput {
     const saveHistory = () => {
 
     };
-    const search = (searchKey, after = () => {}) => {
+
+    const loading = async (func = () => {}) => {
       const $loading = document.createElement('div');
       $loading.innerHTML = `<div class='loading'>가져오는 중</div>`
       document.body.appendChild($loading);
-      onSearch(searchKey).then(() => {
-        document.querySelectorAll('.loading').forEach(v => v.remove());
-        after()
-      })
+      await func();
+      document.querySelectorAll('.loading').forEach(v => v.remove());
     };
+
+    const search = (searchKey, after = () => {}) => {
+      loading(onSearch(searchKey).then(() => after()))
+    };
+
     $searchInput.addEventListener('keyup', e => {
       const searchKey = e.target.value;
       if (e.keyCode === 13 && searchKey.length) {
         search(searchKey, saveHistory);
       }
+    });
+
+    $randomButton.addEventListener('click', e => {
+      loading(onRandom());
     })
   }
+
 
 
 }

@@ -16,6 +16,10 @@ export default class App {
       onSearch: async keyword => {
         const data = await api.fetchCats(keyword);
         this.setState(data);
+      },
+      onRandom: async () => {
+        const data = await api.fetchRandomImages();
+        this.setState(data);
       }
     });
     this.searchResult = new SearchResult({
