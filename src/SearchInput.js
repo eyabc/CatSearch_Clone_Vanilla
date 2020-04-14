@@ -46,6 +46,7 @@ export default class SearchInput {
       const searchKey = e.target.value;
       if (e.keyCode === 13 && searchKey.length) {
         search(searchKey, saveHistory);
+        $searchInput.value = '';
       }
     });
 
