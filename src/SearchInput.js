@@ -1,9 +1,7 @@
-const SEARCH_HISTORY = 'searchHistory';
-const getItem = () => JSON.parse(localStorage.getItem(SEARCH_HISTORY) || '[]');
-const setItem = item => localStorage.setItem(SEARCH_HISTORY, JSON.stringify(item));
+const SEARCH_KEY_HISTORY = 'searchHistory';
 
 export default class SearchInput {
-  constructor({ $target, onSearch, onRandom }) {
+  constructor({ $target, onSearch, onRandom, getItem, setItem }) {
     const $searchWrapper = document.createElement('div');
     $searchWrapper.className = 'SearchWrap';
 
@@ -21,7 +19,7 @@ export default class SearchInput {
 
     const $historyList = document.createElement('ul');
     this.$historyList = $historyList;
-    const historyRender = () => getItem().reverse().map(v => `
+    const historyRender = () => getItem(SEARCH_KEY_HISTORY).reverse().map(v => `
       <li>
         <a href="#" class="history">${v}</a>
       </li>
@@ -44,12 +42,11 @@ export default class SearchInput {
 
     const search = (searchKey) => loading(onSearch(searchKey));
 
-
     $searchInput.addEventListener('keyup', e => {
       const searchKey = e.target.value;
       if (e.keyCode === 13 && searchKey.length) {
         search(searchKey);
-        setItem([...getItem(), searchKey].slice(-5));
+        setItem([...getItem(SEARCH_KEY_HISTORY), searchKey].slice(-5), SEARCH_KEY_HISTORY);
         $historyList.innerHTML = historyRender();
         $searchInput.value = '';
       }

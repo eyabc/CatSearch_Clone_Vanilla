@@ -4,11 +4,17 @@ import SearchInput from './SearchInput.js'
 import SearchResult from './SearchResult.js'
 import ImageInfo from './ImageInfo.js'
 
+const LAST_DATA = 'lastData';
+
+
 export default class App {
   $target = null;
   data = [];
 
-  constructor ($target) {
+  constructor ($target, data) {
+    this.getItem = key => JSON.parse(localStorage.getItem(key) || '[]');
+    this.setItem = (item, key) => localStorage.setItem(key, JSON.stringify(item));
+
     this.$target = $target;
     const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches;
 
@@ -33,8 +39,11 @@ export default class App {
 
     new SearchInput({
       $target,
+      getItem: this.getItem,
+      setItem: this.setItem,
       onSearch: async keyword => {
         const data = await api.fetchCats(keyword);
+        console.log(data);
         this.setState(data);
       },
       onRandom: async () => {
@@ -55,11 +64,13 @@ export default class App {
       $target,
       isDark,
       getCharacter: async id => api.fetchCharacter(id)
-    })
+    });
+    this.setState(this.getItem(LAST_DATA));
   }
 
   setState(nextData) {
     this.data = nextData;
+    this.setItem(nextData, LAST_DATA);
     this.searchResult.setState(nextData);
   }
 }
