@@ -13,11 +13,11 @@ const request = async url => {
 };
 
 export default {
-  fetchRandomImages: () => request(`${API_ENDPOINT}/limit=50`),
+  fetchRandomImages: () => request(`${API_ENDPOINT}limit=50`),
   fetchCats: keyword => {
     const pattern = /고양이|cat/;
     if (pattern.test(keyword)) {
-      return request(`${API_ENDPOINT}/limit=50`)
+      return request(`${API_ENDPOINT}limit=50`);
     }
     return [];
   }

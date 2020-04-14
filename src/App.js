@@ -20,6 +20,8 @@ export default class App {
     });
     this.searchResult = new SearchResult({
       $target,
+      catData: this.data,
+
     });
     this.imageInfo = new ImageInfo({
       $target,
@@ -28,7 +30,7 @@ export default class App {
 
   setState(nextData) {
     this.data = nextData;
-
+    this.searchResult.setState(nextData);
   }
 
 
