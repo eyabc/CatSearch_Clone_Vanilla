@@ -1,0 +1,63 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+#App {
+    margin: 1.5em auto;
+    max-width: 1200px;
+    column-gap: 1.5em;
+}
+
+.SearchResult {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(230px, 1fr));
+    grid-gap: 10px;
+}
+
+.SearchResult img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.SearchInput {
+    width: 100%;
+    font-size: 40px;
+    padding: 10px 15px;
+}
+
+.SearchWrap {
+    display: flex;
+}
+
+.RandomButton {
+    margin-left: 10px;
+    width: 110px;
+    font-size: 19px;
+    background: #09f;
+    color: #fff;
+    border: none;
+}
+
+@media(max-width: 993px) {
+    .SearchResult {
+        grid-template-columns: repeat(3, minmax(250px, 1fr))
+    }
+}
+@media (max-width: 769px) {
+    .SearchResult {
+        grid-template-columns: repeat(2, minmax(280px, 1fr));
+    }
+}
+@media (max-width: 577px) {
+    .SearchResult {
+        display: block;
+    }
+}

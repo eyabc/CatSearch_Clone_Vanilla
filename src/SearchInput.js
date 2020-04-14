@@ -3,10 +3,10 @@ const SEARCH_HISTORY = 'searchHistory';
 export default class SearchInput {
   constructor({ $target, onSearch }) {
     const $searchWrapper = document.createElement('div');
-    $searchWrapper.className = 'searchWrap';
+    $searchWrapper.className = 'SearchWrap';
 
     const $searchInput = document.createElement('input');
-    $searchInput.className = 'searchInput';
+    $searchInput.className = 'SearchInput';
     this.$searchInput = $searchInput;
     this.$searchInput.placeholder = '고양이를 검색해보세요.';
     this.$searchInput.autofocus = true;
@@ -15,7 +15,7 @@ export default class SearchInput {
     const $randomButton = document.createElement('button');
     this.$randomButton = $randomButton;
     this.$randomButton.innerHTML = "랜덤이미지";
-    this.$randomButton.className = 'randomButton';
+    this.$randomButton.className = 'RandomButton';
 
     const $historyList = document.createElement('ul');
     this.$historyList = $historyList;
