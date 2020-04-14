@@ -24,11 +24,16 @@ export default class App {
     });
     this.searchResult = new SearchResult({
       $target,
-      catData: this.data,
-
+      openInfo: id => {
+        this.imageInfo.setState({
+          visible: true,
+          id
+        })
+      }
     });
     this.imageInfo = new ImageInfo({
       $target,
+      getCharacter: async id => api.fetchCharacter(id)
     })
   }
 

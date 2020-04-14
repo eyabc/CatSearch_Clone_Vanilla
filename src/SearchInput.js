@@ -34,7 +34,7 @@ export default class SearchInput {
       const $loading = document.createElement('div');
       $loading.innerHTML = `<div class='loading'>가져오는 중</div>`
       document.body.appendChild($loading);
-      await func();
+      await func;
       document.querySelectorAll('.loading').forEach(v => v.remove());
     };
 

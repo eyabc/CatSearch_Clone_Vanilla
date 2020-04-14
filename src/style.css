@@ -46,6 +46,45 @@ html {
     border: none;
 }
 
+.ImageInfo {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #000;
+}
+
+.ImageInfo ul,
+.ImageInfo li {
+    list-style: none;
+}
+
+.ImageInfo .title,
+.ImageInfo .description {
+    padding: 5px;
+}
+
+.ImageInfo .title {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.ImageInfo .content-wrapper {
+    padding: 10px 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 5px;
+}
+.ImageInfo .content-wrapper img {
+    width: 100%;
+}
 @media(max-width: 993px) {
     .SearchResult {
         grid-template-columns: repeat(3, minmax(250px, 1fr))
@@ -60,4 +99,8 @@ html {
     .SearchResult {
         display: block;
     }
+}
+
+.item {
+    cursor: pointer;
 }

@@ -1,11 +1,12 @@
 export default class SearchResult {
-  constructor({ $target, catData }) {
+  constructor({ $target, catData, openInfo }) {
     const $searchResult = document.createElement('div');
     this.$searchResult = $searchResult;
     this.$searchResult.className = "SearchResult";
     $target.appendChild(this.$searchResult);
 
     this.data = catData;
+    this.openInfo = openInfo
   }
   setState(nextData) {
     this.data = nextData;
@@ -24,5 +25,12 @@ export default class SearchResult {
         </article>
       `).join("")
       : '검색 결과가 없습니다.';
+
+    this.$searchResult.querySelectorAll('.item')
+      .forEach(($item, index) => {
+        $item.addEventListener('click', () => {
+          this.openInfo(this.data[index].id);
+        })
+    })
   }
 }
