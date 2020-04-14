@@ -8,6 +8,14 @@ html {
     box-sizing: inherit;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+a:hover {
+    text-decoration: underline;
+}
+
 #App {
     margin: 1.5em auto;
     max-width: 1200px;

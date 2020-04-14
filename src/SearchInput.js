@@ -1,4 +1,6 @@
 const SEARCH_HISTORY = 'searchHistory';
+const getItem = () => JSON.parse(localStorage.getItem(SEARCH_HISTORY) || '[]');
+const setItem = item => localStorage.setItem(SEARCH_HISTORY, JSON.stringify(item));
 
 export default class SearchInput {
   constructor({ $target, onSearch, onRandom }) {
@@ -19,16 +21,18 @@ export default class SearchInput {
 
     const $historyList = document.createElement('ul');
     this.$historyList = $historyList;
+    const historyRender = () => getItem().reverse().map(v => `
+      <li>
+        <a href="#" class="history">${v}</a>
+      </li>
+    `).join('');
+    $historyList.innerHTML = historyRender();
 
     $searchWrapper.appendChild($searchInput);
     $searchWrapper.appendChild($randomButton);
 
     $target.appendChild($searchWrapper);
     $target.append($historyList);
-
-    const saveHistory = () => {
-
-    };
 
     const loading = async (func = () => {}) => {
       const $loading = document.createElement('div');
@@ -38,21 +42,26 @@ export default class SearchInput {
       document.querySelectorAll('.loading').forEach(v => v.remove());
     };
 
-    const search = (searchKey, after = () => {}) => {
-      loading(onSearch(searchKey).then(() => after()))
-    };
+    const search = (searchKey) => loading(onSearch(searchKey));
+
 
     $searchInput.addEventListener('keyup', e => {
       const searchKey = e.target.value;
       if (e.keyCode === 13 && searchKey.length) {
-        search(searchKey, saveHistory);
+        search(searchKey);
+        setItem([...getItem(), searchKey].slice(-5));
+        $historyList.innerHTML = historyRender();
         $searchInput.value = '';
       }
     });
 
-    $randomButton.addEventListener('click', e => {
-      loading(onRandom());
+    $randomButton.onclick = _ => loading(onRandom());
+
+    $historyList.addEventListener('click', e => {
+      const target = e.target;
+      if (target.className === 'history') search(target.innerHTML);
     })
+
   }
 
 
