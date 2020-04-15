@@ -5,6 +5,7 @@ import SearchResult from './SearchResult.js'
 import ImageInfo from './ImageInfo.js'
 
 const LAST_DATA = 'lastData';
+const LAST_SEARCH_KEY = 'lastSearchKey';
 
 
 export default class App {
@@ -43,12 +44,13 @@ export default class App {
       setItem: this.setItem,
       onSearch: async keyword => {
         const data = await api.fetchCats(keyword);
-        console.log(data);
+        this.setItem(keyword, LAST_SEARCH_KEY);
         this.setState(data);
       },
       onRandom: async () => {
         const data = await api.fetchRandomImages();
         this.setState(data);
+        this.setItem('cat', LAST_SEARCH_KEY);
       }
     });
     this.searchResult = new SearchResult({
@@ -58,6 +60,16 @@ export default class App {
           visible: true,
           id
         })
+      },
+      onScroll: async () => {
+        const lastSearchKey = this.getItem(LAST_SEARCH_KEY);
+        const lastData = this.getItem(LAST_DATA);
+        console.log(lastData);
+        const newData = await api.fetchCats(lastSearchKey);
+        this.data = [...lastData, ...newData];
+        this.setItem(this.data, LAST_DATA);
+        this.searchResult.setState(this.data)
+        this.searchResult.appendData(newData)
       }
     });
     this.imageInfo = new ImageInfo({
@@ -72,5 +84,6 @@ export default class App {
     this.data = nextData;
     this.setItem(nextData, LAST_DATA);
     this.searchResult.setState(nextData);
+    this.searchResult.render(nextData);
   }
 }
