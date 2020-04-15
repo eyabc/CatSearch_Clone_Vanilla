@@ -1,6 +1,5 @@
 export default class ImageInfo {
   constructor ({$target, getCharacter, isDark}) {
-
     this.visible = false;
     this.id = null;
     this.$target = $target;
@@ -8,12 +7,8 @@ export default class ImageInfo {
     const $imageInfo = document.createElement('div');
     $imageInfo.className = 'ImageInfo';
     this.$imageInfo = $imageInfo;
-
-    this.close = () => {
-      this.$imageInfo.remove();
-    };
+    this.close = () => this.$imageInfo.remove();
     this.isDark = isDark;
-
   }
 
   async setState ({id, visible}) {
@@ -49,17 +44,11 @@ export default class ImageInfo {
       this.$target.appendChild(this.$imageInfo);
 
       this.$imageInfo.querySelector('.close')
-        .addEventListener('click', e => {
-          this.setState({ id: null, visible: false})
-      });
+        .addEventListener('click', e => this.setState({ id: null, visible: false}));
 
-      this.$imageInfo.addEventListener('click', e => {
-        this.close();
-      });
+      this.$imageInfo.addEventListener('click', _ => this.close());
       const $content = this.$imageInfo.querySelector('.content-wrapper');
-      $content.onclick = e => {
-        e.stopPropagation();
-      };
+      $content.onclick = e => e.stopPropagation();
       if(this.isDark) {
         $content.classList.remove('white');
         $content.classList.add('dark');

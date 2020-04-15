@@ -34,7 +34,7 @@ export default class SearchInput {
 
     const loading = async (func = () => {}) => {
       const $loading = document.createElement('div');
-      $loading.innerHTML = `<div class='loading'>가져오는 중</div>`
+      $loading.innerHTML = `<div class='loading'>가져오는 중</div>`;
       document.body.appendChild($loading);
       await func;
       document.querySelectorAll('.loading').forEach(v => v.remove());
@@ -58,9 +58,5 @@ export default class SearchInput {
       const target = e.target;
       if (target.className === 'history') search(target.innerHTML);
     })
-
   }
-
-
-
 }

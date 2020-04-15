@@ -12,7 +12,7 @@ export default class App {
   $target = null;
   data = [];
 
-  constructor ($target, data) {
+  constructor ($target) {
     this.getItem = key => JSON.parse(localStorage.getItem(key) || '[]');
     this.setItem = (item, key) => localStorage.setItem(key, JSON.stringify(item));
 
@@ -49,8 +49,8 @@ export default class App {
       },
       onRandom: async () => {
         const data = await api.fetchRandomImages();
-        this.setState(data);
         this.setItem('cat', LAST_SEARCH_KEY);
+        this.setState(data);
       }
     });
     this.searchResult = new SearchResult({
@@ -64,11 +64,10 @@ export default class App {
       onScroll: async () => {
         const lastSearchKey = this.getItem(LAST_SEARCH_KEY);
         const lastData = this.getItem(LAST_DATA);
-        console.log(lastData);
         const newData = await api.fetchCats(lastSearchKey);
         this.data = [...lastData, ...newData];
         this.setItem(this.data, LAST_DATA);
-        this.searchResult.setState(this.data)
+        this.searchResult.setState(this.data);
         this.searchResult.appendData(newData)
       }
     });
