@@ -18,6 +18,7 @@ export default class ImageInfo {
   }
 
   async render () {
+    const $fragment = document.createDocumentFragment();
     if (this.visible) {
       const {breeds, url} = await this.getCharacter(this.id);
       const data = Object.assign({
@@ -41,7 +42,8 @@ export default class ImageInfo {
             </ul> 
         </article>
       `;
-      this.$target.appendChild(this.$imageInfo);
+      $fragment.appendChild(this.$imageInfo);
+      this.$target.appendChild($fragment);
 
       this.$imageInfo.querySelector('.close')
         .addEventListener('click', e => this.setState({ id: null, visible: false}));

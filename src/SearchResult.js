@@ -6,9 +6,11 @@ export default class SearchResult {
 
     this.loading = false;
     const $searchResult = document.createElement('div');
+    const $fragment = document.createDocumentFragment();
     this.$searchResult = $searchResult;
     this.$searchResult.className = "SearchResult";
-    $target.appendChild(this.$searchResult);
+    $fragment.appendChild(this.$searchResult);
+    $target.appendChild($fragment);
   }
   lazyLoading = async () => {
     const imgs = document.querySelectorAll('.item img[data-src]');

@@ -6,18 +6,12 @@ import ImageInfo from './ImageInfo.js'
 
 const LAST_DATA = 'lastData';
 const LAST_SEARCH_KEY = 'lastSearchKey';
+const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches;
 
 
 export default class App {
-  $target = null;
-  data = [];
-
   constructor ($target) {
-    this.getItem = key => JSON.parse(localStorage.getItem(key) || '[]');
-    this.setItem = (item, key) => localStorage.setItem(key, JSON.stringify(item));
-
-    this.$target = $target;
-    const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: Dark)').matches;
+    this.data = [];
 
     const applyTheme = (value) => {
       const $bodyClass = document.body.classList;
@@ -78,6 +72,8 @@ export default class App {
     });
     this.setState(this.getItem(LAST_DATA));
   }
+  getItem = key => JSON.parse(localStorage.getItem(key) || '[]');
+  setItem = (item, key) => localStorage.setItem(key, JSON.stringify(item));
 
   setState(nextData) {
     this.data = nextData;

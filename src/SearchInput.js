@@ -18,7 +18,6 @@ export default class SearchInput {
     this.$randomButton.className = 'RandomButton';
 
     const $historyList = document.createElement('ul');
-    this.$historyList = $historyList;
     const historyRender = () => getItem(SEARCH_KEY_HISTORY).reverse().map(v => `
       <li>
         <a href="#" class="history">${v}</a>
@@ -29,8 +28,12 @@ export default class SearchInput {
     $searchWrapper.appendChild($searchInput);
     $searchWrapper.appendChild($randomButton);
 
-    $target.appendChild($searchWrapper);
-    $target.append($historyList);
+    const $fragment = document.createDocumentFragment();
+    this.$history_fragment = document.createDocumentFragment();
+    this.$history_fragment.appendChild($historyList);
+    $fragment.appendChild($searchWrapper);
+    $target.appendChild($fragment);
+    $target.append(this.$history_fragment);
 
     const loading = async (func = () => {}) => {
       const $loading = document.createElement('div');
